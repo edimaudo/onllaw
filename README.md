@@ -30,6 +30,7 @@ onllaw/
 ├── requirements.txt    
 ├── vercel.json         
 └── README.md
+```
 
 ## Setup
 pip install -r requirements.txt
