@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}onllaw | Employment Standards Q&A{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-12 px-6">
+    <h1 class="text-3xl font-bold mb-4">Employment Standards Q&A</h1>
+    <p class="text-gray-600 mb-8 legal-text">Ask anything about your rights in Ontario. Our AI references the latest January 2026 ESA amendments.</p>
+    
+    <form action="/api/qa" method="POST" class="mb-12">
+        <div class="relative">
+            <input type="text" name="question" placeholder="Example: What are the 2026 rules for AI disclosure in hiring?" 
+                   class="w-full p-5 border-2 border-gray-200 rounded-lg shadow-sm focus:border-gold outline-none text-lg">
+            <button type="submit" class="absolute right-3 top-3 btn-gold px-6 py-2 rounded-md font-bold">Ask</button>
+        </div>
+    </form>
+
+    {% if response %}
+    <div class="bg-light-gray p-8 rounded-xl border-l-8 border-gold shadow-lg">
+        <h3 class="font-bold text-sm uppercase tracking-widest text-gray-500 mb-4">AI Summary</h3>
+        <div class="legal-text text-lg leading-relaxed text-gray-800">
+            {{ response | safe }}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
