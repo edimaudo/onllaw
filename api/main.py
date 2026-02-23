@@ -7,10 +7,11 @@ import shutil
 import os
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
-@app.get("/")
-async def serve_home(request: Request):
+@app.get("/", response_class=HTMLResponse)
+async def landing(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.exception_handler(404)
