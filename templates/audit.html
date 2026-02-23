@@ -1,0 +1,17 @@
+
+<div class="mb-8">
+    <div class="flex border-b">
+        <button onclick="showTab('file')" class="py-2 px-4 border-b-2 border-gold font-bold">Full Document</button>
+        <button onclick="showTab('section')" class="py-2 px-4 text-gray-400 hover:text-navy">Specific Clause</button>
+    </div>
+    
+    <div id="file-upload" class="py-6">
+        <p class="text-sm mb-2 italic">Upload your .docx or .pdf contract</p>
+        </div>
+
+    <div id="section-review" class="py-6 hidden">
+        <p class="text-sm mb-2 italic">Paste a specific section (e.g., Termination Clause)</p>
+        <textarea name="clause_text" class="w-full h-32 p-3 border rounded" placeholder="Paste text here..."></textarea>
+        <button class="btn-gold px-6 py-2 mt-2 rounded">Review Section</button>
+    </div>
+</div>
