@@ -1,17 +1,30 @@
-from docling.document_converter import DocumentConverter
 from pathlib import Path
 import os
+import fitz  # PyMuPDF
+from docx import Document
+import io
 
-converter = DocumentConverter()
+def extract_text_from_bytes(file_bytes: bytes, filename: str) -> str:
+    """Detects file type and extracts text using lightweight libraries."""
+    ext = filename.split('.')[-1].lower()
+    
+    if ext == 'pdf':
+        # PyMuPDF is extremely fast and Vercel-compatible
+        doc = fitz.open(stream=file_bytes, filetype="pdf")
+        text = ""
+        for page in doc:
+            text += page.get_text("text") + "\n"
+        return text
 
-def extract_text_from_file(file_path: str) -> str:
-    """Extracts clean markdown text from PDF or DOCX using Docling."""
-    try:
-        result = converter.convert(file_path)
-        # Exporting to markdown preserves legal structure (headings, lists)
-        return result.document.export_to_markdown()
-    except Exception as e:
-        return f"Error processing document: {str(e)}"
+    elif ext in ['docx', 'doc']:
+        # python-docx handles Word files with minimal overhead
+        f = io.BytesIO(file_bytes)
+        doc = Document(f)
+        return "\n".join([para.text for para in doc.paragraphs])
+
+    return "Unsupported file format."
+
+
 
 def chunk_text(text: str, max_chars: int = 5000):
     """Utility to break large contracts into digestible parts for the AI."""
