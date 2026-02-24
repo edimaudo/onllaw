@@ -1,6 +1,6 @@
 # onllaw
 
-**onllaw** is a Legal Decision Support System focused on democratizing access to employment law in Ontario by providing instant contract audits and rights-based Q&A.
+**onllaw** is a Legal Decision Support System focused on democratizing access to employment law in Ontario by providing contract audits and rights-based Q&A.
 
 ## Key Features
 - **Employment Standards Q&A**: Summarized answers regarding Ontario employment rights.
@@ -10,8 +10,8 @@
 
 ## Technological Implementation
 - **AI Orchestration**: [Airia](https://airia.com)
-- **Backend**: FastAPI (Python 3.11+)
-- **Frontend**: Jinja2 + Tailwind CSS .
+- **Backend**: FastAPI
+- **Frontend**: Jinja2
 
 ## Project Structure
 ```
