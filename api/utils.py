@@ -1,6 +1,6 @@
 from pathlib import Path
 import os
-import fitz  # PyMuPDF
+import fitz
 from docx import Document
 import io
 
