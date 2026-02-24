@@ -6,7 +6,7 @@
 - **Employment Standards Q&A**: Summarized answers regarding Ontario employment rights.
 - **Dual-Mode Contract Audit**:
     - **Full Audit**: Upload `.pdf` or `.docx` files for a comprehensive compliance check.
-    - **Clause Spotlight**: Paste specific sections (e.g., Termination, Non-solicit) for instant, targeted analysis.
+    - **Clause Spotlight**: Paste specific sections (e.g., Termination, Non-solicit) for targeted analysis.
 
 ## Technological Implementation
 - **AI Orchestration**: [Airia](https://airia.com)
