@@ -4,7 +4,7 @@ import fitz  # PyMuPDF
 from docx import Document
 import io
 
-def extract_text_from_bytes(file_bytes: bytes, filename: str) -> str:
+def extract_text_from_file(file_bytes: bytes, filename: str) -> str:
     """Detects file type and extracts text using lightweight libraries."""
     ext = filename.split('.')[-1].lower()
     
