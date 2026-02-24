@@ -1,6 +1,6 @@
 # onllaw
 
-**onllaw** is a Legal Decision Support System focused on democratizing access to employment law in Ontario by providing contract audits and rights-based Q&A.
+**onllaw** is a Legal Decision Support System focused on democratizing access to employment law in Ontario by providing contract review and employment rights Q&A.
 
 ## Key Features
 - **Employment Standards Q&A**: Summarized answers regarding Ontario employment rights.
