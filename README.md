@@ -27,7 +27,9 @@ onllaw/
 │   ├── qa.html         
 │   ├── audit.html      
 │   └── 404.html        
-├── static/             
+├── static/
+└── js/
+│    └── qa_handler.js        
 ├── requirements.txt    
 ├── vercel.json         
 └── README.md
