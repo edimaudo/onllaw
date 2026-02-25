@@ -28,8 +28,8 @@ onllaw/
 │   ├── audit.html      
 │   └── 404.html        
 ├── static/
-└── js/
-│    └── qa_handler.js        
+     └── js/
+│         └── qa_handler.js        
 ├── requirements.txt    
 ├── vercel.json         
 └── README.md
