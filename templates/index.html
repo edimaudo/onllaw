@@ -14,7 +14,11 @@
         body { font-family: 'Lato', sans-serif; background-color: var(--navy); color: white; margin: 0; }
         h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
         .legal-text { font-family: 'Century Schoolbook', serif; }
-        .btn-gold { background-color: var(--gold); color: var(--navy); transition: 0.3s; }
+        
+        /* Explicit Navy class for the circles */
+        .circle-navy { background-color: #002147 !important; }
+        
+        .btn-gold { background-color: var(--gold); color: #002147; transition: 0.3s; }
         .btn-gold:hover { background-color: #B8962E; transform: translateY(-2px); }
     </style>
 </head>
@@ -47,8 +51,8 @@
                     <ul class="space-y-6">
                         
                         <li class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-navy rounded-full flex items-center justify-center mr-4 mt-0.5 shadow-md">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                            <div class="flex-shrink-0 w-10 h-10 circle-navy rounded-full flex items-center justify-center mr-4 mt-0.5 shadow-md">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </div>
@@ -59,8 +63,8 @@
                         </li>
 
                         <li class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-navy rounded-full flex items-center justify-center mr-4 mt-0.5 shadow-md">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                            <div class="flex-shrink-0 w-10 h-10 circle-navy rounded-full flex items-center justify-center mr-4 mt-0.5 shadow-md">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </div>
@@ -71,8 +75,8 @@
                         </li>
 
                         <li class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-navy rounded-full flex items-center justify-center mr-4 mt-0.5 shadow-md">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                            <div class="flex-shrink-0 w-10 h-10 circle-navy rounded-full flex items-center justify-center mr-4 mt-0.5 shadow-md">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </div>
@@ -83,8 +87,8 @@
                         </li>
 
                         <li class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-navy rounded-full flex items-center justify-center mr-4 mt-0.5 shadow-md">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                            <div class="flex-shrink-0 w-10 h-10 circle-navy rounded-full flex items-center justify-center mr-4 mt-0.5 shadow-md">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </div>
@@ -98,7 +102,6 @@
                 </div>
             </div>
         </div>
-        <div class="absolute top-0 right-0 w-1/3 h-full bg-white opacity-5 transform skew-x-12 translate-x-20 pointer-events-none"></div>
     </header>
 
     <footer class="py-12 text-center">
