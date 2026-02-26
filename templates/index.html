@@ -24,20 +24,6 @@
 </head>
 <body class="bg-white">
 
-    <!---
-    <nav class="p-6 bg-white border-b border-gray-100 flex justify-between items-center">
-        <div class="text-2xl font-bold tracking-tighter text-navy flex items-center">
-            <span class="text-gold mr-1">⚖️</span> onllaw
-        </div>
-        
-        <div class="space-x-8 font-semibold text-sm uppercase tracking-widest">
-            <a href="#features" class="hover:text-gold">How it Works</a>
-            <a href="#" class="hover:text-gold">Lawyer Network</a>
-            <a href="/audit" class="px-5 py-2 btn-gold rounded-full shadow-lg">Start Review</a>
-        </div>
-        --->
-    </nav>
-
     <header class="bg-navy text-white py-24 px-6 relative overflow-hidden">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 z-10">
@@ -47,44 +33,65 @@
                 <p class="text-xl text-gray-300 mb-8 legal-text leading-relaxed">
                     <strong>onllaw</strong> is a legal decision support system built specifically for Ontario employees to review employment contracts to help them understand their rights better.
                 </p>
-                <div class="flex space-x-4">
-                    <a href="api/audit" class="px-8 py-4 btn-gold text-navy font-bold rounded-md text-lg">Employment Contract Analysis</a>
-                    <a href="api/qa" class="px-8 py-4 border border-white hover:bg-[white] hover:!text-[#002147] font-bold rounded-md text-lg transition duration-300 transform: translateY(-2px);">Employment Q&A</a>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="api/audit" class="px-8 py-4 btn-gold text-navy font-bold rounded-md text-lg text-center">Employment Contract Analysis</a>
+                    <a href="api/qa" class="px-8 py-4 border border-white hover:bg-white hover:text-[#002147] font-bold rounded-md text-lg transition duration-300 text-center">Employment Q&A</a>
                 </div>
             </div>
 
             <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center md:justify-end">
                 <div class="bg-white p-8 rounded-xl shadow-2xl text-navy w-full max-w-sm border-t-8 border-gold">
-                    <h3 class="text-xl font-bold mb-6 text-center text-gray-500 border-b pb-4">Core Capabilities</h3>
+                    <h3 class="text-xl font-bold mb-8 text-center text-gray-400 uppercase tracking-wider border-b border-gray-100 pb-4">Core Capabilities</h3>
                     <ul class="space-y-6">
+                        
                         <li class="flex items-start">
-                            <span class="bg-navy text-white rounded-full p-2 mr-4 mt-1">✓</span>
+                            <div class="flex-shrink-0 w-8 h-8 bg-navy rounded-full flex items-center justify-center mr-4 mt-0.5 shadow-md">
+                                <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
                             <div>
-                                <strong class="block text-gray-500">ESA Compliance Check</strong>
-                                <span class="text-sm text-gray-500">Cross-referenced with Ontario Employment Standards Act statutes.</span>
+                                <strong class="block text-navy text-lg leading-tight">ESA Compliance Check</strong>
+                                <p class="text-sm text-gray-500 mt-1">Cross-referenced with Ontario Employment Standards Act statutes.</p>
                             </div>
                         </li>
+
                         <li class="flex items-start">
-                            <span class="bg-navy text-white rounded-full p-2 mr-4 mt-1">✓</span>
+                            <div class="flex-shrink-0 w-8 h-8 bg-navy rounded-full flex items-center justify-center mr-4 mt-0.5 shadow-md">
+                                <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
                             <div>
-                                <strong class="block text-gray-500">Red-Flag Detection</strong>
-                                <span class="text-sm text-gray-500">Alerts for illegal issues.</span>
+                                <strong class="block text-navy text-lg leading-tight">Red-Flag Detection</strong>
+                                <p class="text-sm text-gray-500 mt-1">Alerts for illegal issues.</p>
                             </div>
                         </li>
+
                         <li class="flex items-start">
-                            <span class="bg-navy text-white rounded-full p-2 mr-4 mt-1">✓</span>
+                            <div class="flex-shrink-0 w-8 h-8 bg-navy rounded-full flex items-center justify-center mr-4 mt-0.5 shadow-md">
+                                <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
                             <div>
-                                <strong class="block text-gray-500">Advocacy Draft</strong>
-                                <span class="text-sm text-gray-500">AI-generated information for improved HR negotiation</span>
+                                <strong class="block text-navy text-lg leading-tight">Advocacy Draft</strong>
+                                <p class="text-sm text-gray-500 mt-1">AI-generated information for improved HR negotiation.</p>
                             </div>
                         </li>
+
                         <li class="flex items-start">
-                            <span class="bg-navy text-white rounded-full p-2 mr-4 mt-1">✓</span>
+                            <div class="flex-shrink-0 w-8 h-8 bg-navy rounded-full flex items-center justify-center mr-4 mt-0.5 shadow-md">
+                                <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
                             <div>
-                                <strong class="block text-gray-500">Lawyer Referrals</strong>
-                                <span class="text-sm text-gray-500">Direct connection to legal experts</span>
+                                <strong class="block text-navy text-lg leading-tight">Lawyer Referrals</strong>
+                                <p class="text-sm text-gray-500 mt-1">Direct connection to legal experts.</p>
                             </div>
                         </li>
+
                     </ul>
                 </div>
             </div>
