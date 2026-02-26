@@ -1,5 +1,63 @@
 {% extends "base.html" %}
+<script>
+/**
+ * HANDLER FOR ESA LEGAL AGENT (2026 INTEGRATION)
+ * This script connects the frontend form to the backend 'agent.py'
+ */
+document.getElementById('qaForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // 1. Capture user input and UI elements
+    const question = document.getElementById('question').value;
+    const submitBtn = document.getElementById('submitBtn');
+    const resultContainer = document.getElementById('resultContainer');
+    const answerArea = document.getElementById('answerArea');
 
+    // 2. Initial UI State (Loading)
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+        <span class="flex items-center justify-center">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            CONSULTING THE ESA...
+        </span>`;
+    
+    // Hide previous results while loading
+    resultContainer.classList.add('hidden');
+
+    try {
+        // 3. Call the Python Backend (agent.py)
+        const response = await fetch('/ask', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ question: question })
+        });
+
+        if (!response.ok) throw new Error('Backend failed to respond');
+
+        const data = await response.json();
+
+        // 4. Render the Result
+        // We use innerHTML to support markdown-like spacing or bolded headers from the AI
+        resultContainer.classList.remove('hidden');
+        answerArea.innerHTML = data.answer.replace(/\n/g, '<br>');
+
+    } catch (error) {
+        console.error("Legal Agent Error:", error);
+        resultContainer.classList.remove('hidden');
+        answerArea.innerHTML = `<span class="text-red-600 font-bold">CONNECTION ERROR:</span> Unable to reach the Legal Agent. Please verify your internet connection or try again later.`;
+    } finally {
+        // 5. Reset UI State
+        submitBtn.disabled = false;
+        submitBtn.innerText = "SUBMIT INQUIRY";
+    }
+});
+</script>
 {% block content %}
 <div class="bg-[#002147] min-h-screen">
     <div class="max-w-4xl mx-auto py-12 px-6">
@@ -30,5 +88,4 @@
     </div>
 </div>
 
-<script src="{{ url_for('static', path='/js/qa_handler.js') }}"></script>
 {% endblock %}
