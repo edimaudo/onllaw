@@ -52,7 +52,8 @@ async def ask_esa_lawyer(question: str):
                 data.get("text") or 
                 "The agent processed the request but returned an empty or unknown format."
             )
-            
+            if isinstance(answer, dict):
+                answer = answer.get("text") or answer.get("content") or str(answer)
             return answer
             
         except httpx.HTTPStatusError as e:
