@@ -20,25 +20,25 @@ async def landing(request: Request):
 async def custom_404_handler(request: Request, __):
     return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
 
-# @app.post("/api/audit")
-#  async def handle_audit(
-#      file: UploadFile = File(None), 
-#      clause_text: str = Form(None)
-#  ):
-#      context = ""
-#     # Check if user uploaded a file OR pasted a clause
-#     if file:
-#         temp_path = f"temp_{file.filename}"
-#         with open(temp_path, "wb") as buffer:
-#             shutil.copyfileobj(file.file, buffer)
-#         context = extract_text_from_file(temp_path)
-#         os.remove(temp_path)
-#     elif clause_text:
-#         context = clause_text
+@app.post("/api/audit")
+ async def handle_audit(
+     file: UploadFile = File(None), 
+     clause_text: str = Form(None)
+ ):
+     context = ""
+    # Check if user uploaded a file OR pasted a clause
+    if file:
+        temp_path = f"temp_{file.filename}"
+        with open(temp_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        context = extract_text_from_file(temp_path)
+        os.remove(temp_path)
+    elif clause_text:
+        context = clause_text
 
-#     #
-#     analysis = ''#await call_airia_agent("Audit this for 2026 ESA compliance", context)
-#     return analysis
+    #
+    analysis = ''#await call_airia_agent("Audit this for 2026 ESA compliance", context)
+    return analysis
 
 
 @app.get("/api/qa", response_class=HTMLResponse)
@@ -57,7 +57,6 @@ async def handle_qa_logic(question: str = Form(...)):
 async def get_lawyers_page(request: Request):
     """
     Serves the list of LSO Certified Specialists. 
-    Using /api/lawyers to keep the API structure consistent.
     """
     specialists = [
         {"name": "S. Margot Blight", "firm": "S. Margot Blight, Lawyer", "city": "Mississauga"},
