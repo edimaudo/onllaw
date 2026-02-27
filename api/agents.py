@@ -69,10 +69,10 @@ async def ask_esa_lawyer(question: str):
 
                 answer = (
                     f"{summary}\n\n"
-                    f"STATUS: {enforce}\n\n"
-                    f"APPLICABLE SECTIONS:\n{sections}\n\n"
-                    f"NEXT STEPS:\n{steps}\n\n"
-                    f"NOTICE: {disclaimer}"
+                    f"STATUS\n{enforce}\n\n"
+                    f"APPLICABLE SECTIONS\n{sections}\n\n"
+                    f"NEXT STEPS\n{steps}\n\n"
+                    f"NOTICE:{disclaimer}"
                 )
 
             return str(answer)
