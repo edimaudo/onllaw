@@ -10,7 +10,7 @@ AIRIA_AGENT_ID = os.getenv("AIRIA_AGENT_ID")
 class QuestionRequest(BaseModel):
     question: str
 
-@app.post("/ask")
+@app.post("/api/qa")
 async def ask_esa_lawyer(request: QuestionRequest):
     headers = {
         "X-API-Key": AIRIA_KEY,
