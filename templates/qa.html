@@ -43,15 +43,14 @@ document.getElementById('qaForm').addEventListener('submit', async (e) => {
 
     // UI State: Loading
     submitBtn.disabled = true;
-    submitBtn.innerText = "CONSULTING THE ESA...";
+    submitBtn.innerText = "Consulting the Employment Service Act (ESA)...";
     resultContainer.classList.add('hidden');
 
     try {
-        // MATCHING MAIN.PY: Use FormData because main.py uses Form(...)
         const formData = new FormData();
         formData.append('question', questionInput.value);
 
-        // MATCHING MAIN.PY: Target /api/qa route
+
         const response = await fetch('/api/qa', {
             method: 'POST',
             body: formData 
@@ -68,7 +67,7 @@ document.getElementById('qaForm').addEventListener('submit', async (e) => {
     } catch (error) {
         console.error('Error:', error);
         resultContainer.classList.remove('hidden');
-        answerArea.innerText = "System Error: Unable to reach the legal analysis agent. Please ensure main.py is running.";
+        answerArea.innerText = "Unable to reach the agent.";
     } finally {
         submitBtn.disabled = false;
         submitBtn.innerText = "SUBMIT INQUIRY";
