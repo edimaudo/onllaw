@@ -10,7 +10,7 @@
      - Ability to counter contract information if there are issues (coming soon)
 
 ## Technological Implementation
-- **AI Orchestration**: [Airia](https://airia.com)
+- **AI Orchestration**: Airia
 - **Backend**: FastAPI
 - **Frontend**: Jinja2
 
