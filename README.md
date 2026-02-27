@@ -34,10 +34,3 @@ onllaw/
 ├── vercel.json         
 └── README.md
 ```
-
-## Setup
-pip install -r requirements.txt
-
-Configure .env with AIRIA_API_KEY and AIRIA_AGENT_ID.
-
-Start locally: uvicorn api.main:app --reload
