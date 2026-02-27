@@ -25,25 +25,25 @@ async def get_qa_page(request: Request):
     """Reasoning: This renders the UI when the user clicks the link."""
     return templates.TemplateResponse("audit.html", {"request": request})
 
-@app.post("/api/audit")
- async def handle_audit(
-     file: UploadFile = File(None), 
-     clause_text: str = Form(None)
- ):
-     context = ""
-    # Check if user uploaded a file OR pasted a clause
-    if file:
-        temp_path = f"temp_{file.filename}"
-        with open(temp_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
-        context = extract_text_from_file(temp_path)
-        os.remove(temp_path)
-    elif clause_text:
-        context = clause_text
+# @app.post("/api/audit")
+#  async def handle_audit(
+#      file: UploadFile = File(None), 
+#      clause_text: str = Form(None)
+#  ):
+#      context = ""
+#     # Check if user uploaded a file OR pasted a clause
+#     if file:
+#         temp_path = f"temp_{file.filename}"
+#         with open(temp_path, "wb") as buffer:
+#             shutil.copyfileobj(file.file, buffer)
+#         context = extract_text_from_file(temp_path)
+#         os.remove(temp_path)
+#     elif clause_text:
+#         context = clause_text
 
-    #
-    analysis = ''#await call_airia_agent("Audit this for 2026 ESA compliance", context)
-    return analysis
+#     #
+#     analysis = ''#await call_airia_agent("Audit this for 2026 ESA compliance", context)
+#     return analysis
 
 
 @app.get("/api/qa", response_class=HTMLResponse)
