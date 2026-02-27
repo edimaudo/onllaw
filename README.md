@@ -18,9 +18,9 @@
 ```
 onllaw/
 ├── api/
-│   ├── main.py         # Entry point & FastAPI routing
-│   ├── agents.py       # Airia SDK orchestration logic
-│   └── utils.py        # Docling document extraction & text cleaning
+│   ├── main.py         
+│   ├── agents.py       
+│   └── utils.py        
 ├── templates/
 │   ├── base.html       
 │   ├── index.html      
@@ -28,8 +28,7 @@ onllaw/
 │   ├── audit.html      
 │   └── 404.html        
 ├── static/
-     └── js/
-│         └── qa_handler.js        
+     └── js/        
 ├── requirements.txt    
 ├── vercel.json         
 └── README.md
