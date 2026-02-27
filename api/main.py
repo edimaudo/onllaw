@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 from .utils import extract_text_from_file
-from .agents import ask_esa_lawyer #, call_airia_agent
+from .agents import ask_esa_lawyer
 import shutil
 import os
 
@@ -36,7 +36,7 @@ async def custom_404_handler(request: Request, __):
     elif clause_text:
         context = clause_text
 
-    # Request specialized audit from Airia
+    #
     analysis = ''#await call_airia_agent("Audit this for 2026 ESA compliance", context)
     return analysis
 
