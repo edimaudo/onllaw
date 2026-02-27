@@ -52,9 +52,24 @@ async def ask_esa_lawyer(question: str):
                 data.get("text") or 
                 "The agent processed the request but returned an empty or unknown format."
             )
+
             if isinstance(answer, dict):
-                answer = answer.get("text") or answer.get("content") or str(answer)
-            return answer
+    
+                summary = answer.get("legal_summary", "")
+                sections = answer.get("applicable_sections", "")
+                enforceability = answer.get("enforceability_status", "")
+                next_steps = answer.get("recommended_next_steps", "")
+                disclaimer = answer.get("disclaimer", "")
+                
+                answer = (
+                    f"{summary}\n\n"
+                    f"Applicable Sections:\n{sections}\n\n"
+                    f"Enforeceability:\n{enforceability}\n\n"
+                    f"Next Steps:\n{next_steps}\n\n"
+                    f"NOTICE: {disclaimer}"
+                )
+            
+            return str(answer)
             
         except httpx.HTTPStatusError as e:
             # If Airia returns an error, we capture the actual message from their server
