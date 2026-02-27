@@ -3,9 +3,6 @@ import httpx
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-app = FastAPI()
-
-
 AIRIA_API_URL = os.getenv("AIRIA_API_URL") 
 AIRIA_KEY = os.getenv("AIRIA_API_KEY")
 AIRIA_AGENT_ID = os.getenv("AIRIA_AGENT_ID")
