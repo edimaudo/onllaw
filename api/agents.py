@@ -10,7 +10,6 @@ AIRIA_AGENT_ID = os.getenv("AIRIA_AGENT_ID")
 async def ask_esa_lawyer(question: str):
     """
     Logic to communicate with the Airia execution endpoint.
-    This function is called by the /api/qa route in main.py.
     """
     
     # 1. Validation to prevent 500 errors before calling the API
@@ -25,7 +24,7 @@ async def ask_esa_lawyer(question: str):
     # 2. Payload structure - ensure 'input' matches your Agent's expected schema
     payload = {
         "agent_id": AIRIA_AGENT_ID,
-        "input": question 
+        "UserInput": question
     }
 
     async with httpx.AsyncClient() as client:
