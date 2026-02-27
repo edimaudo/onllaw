@@ -41,17 +41,17 @@ async def custom_404_handler(request: Request, __):
     return analysis
 
 
-@app.get("/api/qa", response_class=HTMLResponse)
-async def get_qa_page(request: Request):
-    """Reasoning: This renders the UI when the user clicks the link."""
-    return templates.TemplateResponse("qa.html", {"request": request})
+# @app.get("/api/qa", response_class=HTMLResponse)
+# async def get_qa_page(request: Request):
+#     """Reasoning: This renders the UI when the user clicks the link."""
+#     return templates.TemplateResponse("qa.html", {"request": request})
 
-@app.post("/api/qa")
-async def handle_qa_logic(question: str = Form(...)):
-    """Reasoning: This processes the actual AI question after the user hits submit."""
-    answer = await ask_esa_lawyer(question)
-    return {"answer": answer}
-    return response
+# @app.post("/api/qa")
+# async def handle_qa_logic(question: str = Form(...)):
+#     """Reasoning: This processes the actual AI question after the user hits submit."""
+#     answer = await ask_esa_lawyer(question)
+#     return {"answer": answer}
+#     return response
 
 @app.get("/api/lawyers", response_class=HTMLResponse)
 async def get_lawyers_page(request: Request):
