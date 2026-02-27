@@ -2,6 +2,7 @@ import os
 import httpx
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+import json
 
 AIRIA_API_URL = os.getenv("AIRIA_API_URL") 
 AIRIA_KEY = os.getenv("AIRIA_API_KEY")
@@ -53,22 +54,31 @@ async def ask_esa_lawyer(question: str):
                 "The agent processed the request but returned an empty or unknown format."
             )
 
+          if isinstance(answer, str):
+                try:
+                    # This removes the \" quotes and brackets and makes it a Python Dictionary
+                    answer = json.loads(answer)
+                except json.JSONDecodeError:
+                    # If it's just regular text, it stays as a string
+                    pass
+
+            
             if isinstance(answer, dict):
-    
                 summary = answer.get("legal_summary", "")
+                enforce = answer.get("enforceability_status", "")
                 sections = answer.get("applicable_sections", "")
-                enforceability = answer.get("enforceability_status", "")
-                next_steps = answer.get("recommended_next_steps", "")
+                steps = answer.get("recommended_next_steps", "")
                 disclaimer = answer.get("disclaimer", "")
+
                 
                 answer = (
                     f"{summary}\n\n"
-                    f"Applicable Sections:\n{sections}\n\n"
-                    f"Enforeceability:\n{enforceability}\n\n"
-                    f"Next Steps:\n{next_steps}\n\n"
+                    f"STATUS: {enforce}\n\n"
+                    f"APPLICABLE SECTIONS:\n{sections}\n\n"
+                    f"NEXT STEPS:\n{steps}\n\n"
                     f"NOTICE: {disclaimer}"
                 )
-            
+
             return str(answer)
             
         except httpx.HTTPStatusError as e:
