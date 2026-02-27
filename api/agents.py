@@ -24,7 +24,8 @@ async def ask_esa_lawyer(question: str):
     # 2. Payload structure - ensure 'input' matches your Agent's expected schema
     payload = {
         "agent_id": AIRIA_AGENT_ID,
-        "UserInput": question
+        "UserInput": question,
+        "UserId": os.getenv("AIRIA_USER_ID") #, "edimaudo@gmail.com"
     }
 
     async with httpx.AsyncClient() as client:
