@@ -28,7 +28,6 @@ async def ask_esa_lawyer(request: QuestionRequest):
             response = await client.post(AIRIA_API_URL, json=payload, headers=headers, timeout=60.0)
             response.raise_for_status()
             
-            # Airia 2026 typically returns the result in a field named 'output'
             data = response.json()
             return {"answer": data.get("output", "The agent could not process this request.")}
             
