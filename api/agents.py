@@ -63,15 +63,14 @@ async def ask_esa_lawyer(question: str):
                     pass
 
             
-            if isinstance(answer, dict):
-                summary = answer.get("legal_summary", "")
-                enforce = answer.get("enforceability_status", "")
-                sections = answer.get("applicable_sections", "")
-                steps = answer.get("recommended_next_steps", "")
-                disclaimer = answer.get("disclaimer", "")
-
-                
-                answer = (
+          if isinstance(answer, dict):
+              summary = answer.get("legal_summary", "")
+              enforce = answer.get("enforceability_status", "")
+              sections = answer.get("applicable_sections", "")
+              steps = answer.get("recommended_next_steps", "")
+              disclaimer = answer.get("disclaimer", "")
+              
+              answer = (
                     f"{summary}\n\n"
                     f"STATUS: {enforce}\n\n"
                     f"APPLICABLE SECTIONS:\n{sections}\n\n"
@@ -79,7 +78,7 @@ async def ask_esa_lawyer(question: str):
                     f"NOTICE: {disclaimer}"
                 )
 
-            return str(answer)
+          return str(answer)
             
         except httpx.HTTPStatusError as e:
             # If Airia returns an error, we capture the actual message from their server
