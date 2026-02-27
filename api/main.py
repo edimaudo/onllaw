@@ -20,6 +20,11 @@ async def landing(request: Request):
 async def custom_404_handler(request: Request, __):
     return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
 
+@app.get("/api/audit", response_class=HTMLResponse)
+async def get_qa_page(request: Request):
+    """Reasoning: This renders the UI when the user clicks the link."""
+    return templates.TemplateResponse("audit.html", {"request": request})
+
 @app.post("/api/audit")
  async def handle_audit(
      file: UploadFile = File(None), 
