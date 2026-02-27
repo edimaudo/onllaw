@@ -7,29 +7,23 @@ AIRIA_API_URL = os.getenv("AIRIA_API_URL")
 AIRIA_KEY = os.getenv("AIRIA_API_KEY")
 AIRIA_AGENT_ID = os.getenv("AIRIA_AGENT_ID")
 
-class QuestionRequest(BaseModel):
-    question: str
-
-@app.post("/api/qa")
-async def ask_esa_lawyer(request: QuestionRequest):
+async def ask_esa_lawyer(question: str):
+    """
+    This is a PURE function. No FastAPI decorators here.
+    It is called by main.py.
+    """
     headers = {
         "X-API-Key": AIRIA_KEY,
         "Content-Type": "application/json"
     }
     
-    # Simplified payload: 'input' is now just the raw string from the user
     payload = {
         "agent_id": AIRIA_AGENT_ID,
-        "input": request.question 
+        "input": question 
     }
 
     async with httpx.AsyncClient() as client:
-        try:
-            response = await client.post(AIRIA_API_URL, json=payload, headers=headers, timeout=60.0)
-            response.raise_for_status()
-            
-            data = response.json()
-            return {"answer": data.get("output", "The agent could not process this request.")}
-            
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=str(e))
+        response = await client.post(AIRIA_API_URL, json=payload, headers=headers, timeout=60.0)
+        response.raise_for_status()
+        data = response.json()
+        return data.get("output", "The agent could not process this request.")
