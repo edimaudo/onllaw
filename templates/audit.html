@@ -4,43 +4,127 @@
 <div class="bg-[#002147] min-h-screen">
     <div class="max-w-4xl mx-auto py-12 px-6">
         <h2 class="text-3xl font-bold text-white mb-2">Contract Review</h2>
+        <p class="text-gray-300 mb-8">Upload a document or paste a clause to check for ESA violations.</p>
         
-        <div class="mb-8">
-            <div class="flex border-b border-white/20">
-                <button onclick="showTab('file')" class="py-2 px-4 border-b-2 border-gold font-bold text-white">Full Document</button>
-                <button onclick="showTab('section')" class="py-2 px-4 text-gray-400 hover:text-white">Specific Clause</button>
+        <div class="bg-white p-1 shadow-2xl">
+            <div class="flex border-b border-gray-200 bg-gray-50">
+                <button id="tab-file-btn" onclick="showTab('file')" 
+                    class="py-4 px-8 border-b-2 border-gold font-bold text-navy transition-all">
+                    Full Document
+                </button>
+                <button id="tab-section-btn" onclick="showTab('section')" 
+                    class="py-4 px-8 text-gray-400 hover:text-navy border-b-2 border-transparent transition-all">
+                    Specific Clause
+                </button>
             </div>
             
-            <div id="file-upload" class="py-6">
-                <p class="text-sm mb-2 italic text-gray-300">Upload your .docx or .pdf contract</p>
-            </div>
+            <div class="p-8">
+                <form id="auditForm">
+                    <div id="file-upload" class="py-4">
+                        <label class="block text-sm font-bold text-navy mb-4 uppercase">Upload Employment Contract</label>
+                        <input type="file" id="contractFile" name="file" accept=".pdf,.docx" 
+                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-6 file:border-0 file:text-sm file:font-bold file:bg-navy file:text-white hover:file:bg-opacity-90 cursor-pointer">
+                    </div>
 
-            <div id="section-review" class="py-6 hidden">
-                <p class="text-sm mb-2 italic text-gray-300">Paste a specific section (e.g., Termination Clause)</p>
-                <textarea name="clause_text" class="w-full h-32 p-3 border rounded text-navy" placeholder="Paste text here..."></textarea>
-                <button class="btn-gold px-6 py-2 mt-2 rounded">Review Section</button>
+                    <div id="section-review" class="py-4 hidden">
+                        <label class="block text-sm font-bold text-navy mb-2 uppercase">Paste Clause Text</label>
+                        <textarea id="clauseText" name="clause_text" 
+                            class="w-full h-48 p-4 border border-gray-200 outline-none text-navy focus:border-gold transition" 
+                            placeholder="Example: The employer may terminate this agreement at any time without notice..."></textarea>
+                    </div>
+
+                    <button type="submit" id="submitBtn" 
+                        class="w-full mt-6 py-4 bg-gold text-navy font-bold hover:bg-opacity-90 transition uppercase tracking-widest">
+                        Run Compliance Audit
+                    </button>
+                </form>
+
+                <div id="resultContainer" class="hidden mt-10">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-navy uppercase text-sm border-l-4 border-gold pl-3">Analysis & Action Plan</h3>
+                        <button onclick="copyResults()" class="text-xs font-bold text-navy border border-navy px-3 py-1 hover:bg-navy hover:text-white transition">
+                            COPY REPORT & EMAIL
+                        </button>
+                    </div>
+                    <div id="analysisOutput" class="p-6 bg-gray-50 text-navy leading-relaxed whitespace-pre-wrap border border-gray-100 italic">
+                        </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function copyEmail() {
-        const text = document.getElementById('email-body').innerText;
-        navigator.clipboard.writeText(text);
-        alert('Email draft copied!');
-    }
-
+    // Tab Switching Logic with Highlight
     function showTab(tab) {
+        const fileDiv = document.getElementById('file-upload');
+        const sectionDiv = document.getElementById('section-review');
+        const fileBtn = document.getElementById('tab-file-btn');
+        const sectionBtn = document.getElementById('tab-section-btn');
+
         if (tab === 'file') {
-            document.getElementById('file-upload').classList.remove('hidden');
-            document.getElementById('section-review').classList.add('hidden');
+            fileDiv.classList.remove('hidden');
+            sectionDiv.classList.add('hidden');
+            // Update Active Style
+            fileBtn.className = "py-4 px-8 border-b-2 border-gold font-bold text-navy transition-all";
+            sectionBtn.className = "py-4 px-8 text-gray-400 hover:text-navy border-b-2 border-transparent transition-all";
         } else {
-            document.getElementById('file-upload').classList.add('hidden');
-            document.getElementById('section-review').classList.remove('hidden');
+            fileDiv.classList.add('hidden');
+            sectionDiv.classList.remove('hidden');
+            // Update Active Style
+            sectionBtn.className = "py-4 px-8 border-b-2 border-gold font-bold text-navy transition-all";
+            fileBtn.className = "py-4 px-8 text-gray-400 hover:text-navy border-b-2 border-transparent transition-all";
         }
     }
+
+    // Form Submission
+    document.getElementById('auditForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('submitBtn');
+        const resultContainer = document.getElementById('resultContainer');
+        const output = document.getElementById('analysisOutput');
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = "AUDITING DOCUMENT...";
+
+        const formData = new FormData(e.target);
+
+        try {
+            const response = await fetch('/api/audit', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) throw new Error("Server Error");
+
+            const data = await response.json();
+            output.innerText = data.answer;
+            resultContainer.classList.remove('hidden');
+            
+            // Scroll to result
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+
+        } catch (error) {
+            output.innerText = "Error: Could not process document. Ensure the file is not password protected.";
+            resultContainer.classList.remove('hidden');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Run Compliance Audit";
+        }
+    });
+
+    // Copy to Clipboard
+    function copyResults() {
+        const text = document.getElementById('analysisOutput').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Analysis and Email Draft copied to clipboard!");
+        });
+    }
 </script>
+
+<style>
+    .text-gold { color: #D4AF37; }
+    .bg-gold { background-color: #D4AF37; }
+    .border-gold { border-color: #D4AF37; }
+</style>
 {% endblock %}
-
-
