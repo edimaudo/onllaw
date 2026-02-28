@@ -25,25 +25,37 @@ async def get_qa_page(request: Request):
     """Reasoning: This renders the UI when the user clicks the link."""
     return templates.TemplateResponse("audit.html", {"request": request})
 
-# @app.post("/api/audit")
-#  async def handle_audit(
-#      file: UploadFile = File(None), 
-#      clause_text: str = Form(None)
-#  ):
-#      context = ""
-#     # Check if user uploaded a file OR pasted a clause
-#     if file:
-#         temp_path = f"temp_{file.filename}"
-#         with open(temp_path, "wb") as buffer:
-#             shutil.copyfileobj(file.file, buffer)
-#         context = extract_text_from_file(temp_path)
-#         os.remove(temp_path)
-#     elif clause_text:
-#         context = clause_text
+@app.post("/api/audit")
+async def handle_audit(
+    file: UploadFile = File(None), 
+    clause_text: str = Form(None)
+):
+    context = ""
+    
+    # 1. Extraction Logic
+    if file and file.filename:
+        file_bytes = await file.read()
+        context = extract_text_from_file(file_bytes, file.filename)
+    elif clause_text:
+        context = clause_text
 
-#     #
-#     analysis = ''#await call_airia_agent("Audit this for 2026 ESA compliance", context)
-#     return analysis
+    if not context or context == "Unsupported file format.":
+        return {"answer": "Error: Please provide a valid PDF, DOCX, or text snippet."}
+
+    # 2. Specialized Auditor & Drafter Prompt
+    # This instructs the SAME agent to perform a specific task
+    audit_prompt = (
+        "Act as an Ontario Employment Law Expert. Audit the following text for ESA compliance.\n"
+        "1. Identify any illegal or unenforceable clauses (e.g. termination notice).\n"
+        "2. Suggest specific corrections.\n"
+        "3. PROVDE A DRAFT EMAIL at the end if an illegal clause was identified so that the user can send to HR to raise these concerns politely.\n\n"
+        "4. PROVDE A DRAFT EMAIL at the end if an illegal clause was identified so that the user can send to a lawyer to help tackle the illegal issue.\n\n"
+        f"CONTRACT CONTENT:\n{context}"
+    )
+    
+    # 3. Call the Agent
+    analysis = await ask_esa_lawyer(audit_prompt)
+    return {"answer": analysis}
 
 
 @app.get("/api/qa", response_class=HTMLResponse)
