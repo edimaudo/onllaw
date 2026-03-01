@@ -26,21 +26,29 @@ async def get_qa_page(request: Request):
     return templates.TemplateResponse("audit.html", {"request": request})
 
 @app.post("/api/audit")
-async def handle_audit(
-    file: UploadFile = File(None), 
-    clause_text: str = Form(None)
-):
+async def handle_audit(file: UploadFile = File(None), clause_text: str = Form(None)):
     context = ""
     
-    # 1. Extraction Logic
+    # 1. Extraction with Scanned PDF Detection
     if file and file.filename:
         file_bytes = await file.read()
         context = extract_text_from_file(file_bytes, file.filename)
+        
+        # Check for the specific error string from our updated utils.py
+        if context == "ERROR_IMAGE_ONLY_PDF":
+            return {
+                "answer": (
+                    "🚨 SCANNED DOCUMENT DETECTED\n\n"
+                    "This PDF appears to be a scan or an image. Our system cannot read 'flat' text from images. "
+                    "To audit this, please upload a digital PDF (where you can highlight text) or "
+                    "manually paste the clauses into the 'Specific Clause' tab."
+                )
+            }
     elif clause_text:
         context = clause_text
 
-    if not context or context == "Unsupported file format.":
-        return {"answer": "Error: Please provide a valid PDF, DOCX, or text snippet."}
+    if not context or "Unsupported" in context:
+        return {"answer": "Error: No readable text was provided for analysis."}
 
     # 2. Specialized Auditor & Drafter Prompt
     # This instructs the SAME agent to perform a specific task
