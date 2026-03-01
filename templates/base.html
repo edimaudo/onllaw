@@ -14,6 +14,35 @@
         .btn-gold { background-color: var(--gold); color: white; transition: 0.3s; }
         .btn-gold:hover { background-color: #B8962E; transform: translateY(-1px); }
         .border-gold { border-color: var(--gold); }
+        /* Ensure the Gold color is defined if Tailwind misses it */
+    .bg-gold { 
+        background-color: #D4AF37 !important; 
+    }
+    
+    /* Force the button to look like a high-action element */
+    #submitBtn {
+        display: block;
+        width: 100%;
+        padding: 1rem;
+        border-radius: 4px;
+        color: #002147; /* Navy text */
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s ease;
+    }
+
+    #submitBtn:hover {
+        filter: brightness(1.1);
+        transform: translateY(-1px);
+    }
+
+    #submitBtn:disabled {
+        background-color: #cccccc !important;
+        cursor: not-allowed;
+    }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
