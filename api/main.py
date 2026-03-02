@@ -3,8 +3,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
-from utils import extract_text_from_file
-from agents import ask_esa_lawyer
+from .utils import extract_text_from_file
+from .agents import ask_esa_lawyer
 import shutil
 import os
 
