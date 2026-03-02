@@ -1,7 +1,5 @@
 import os
 import httpx
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 import json
 
 AIRIA_API_URL = os.getenv("AIRIA_API_URL")
