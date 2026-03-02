@@ -22,7 +22,7 @@
                 <form id="auditForm" enctype="multipart/form-data">
                     <div id="file-upload" class="py-4">
                         <label class="block text-sm font-bold text-navy mb-4 uppercase">Upload Contract (.pdf, .doc, .docx)</label>
-                        <input type="file" name="file" accept=".pdf,.doc,.docx" 
+                        <input type="file" id="contractFile" name="file" accept=".pdf,.doc,.docx" 
                             class="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-6 file:border-0 file:text-sm file:font-bold file:bg-navy file:text-white hover:file:bg-opacity-90 cursor-pointer">
                     </div>
 
@@ -33,12 +33,13 @@
                             placeholder="Paste the specific paragraph or clause here..."></textarea>
                     </div>
 
-                    <button type="submit" id="submitBtn" class="bg-gold text-navy font-bold">
-    Run Compliance Review
-</button>
+                    <button type="submit" id="submitBtn" class="bg-gold text-navy font-bold w-full py-4 flex justify-center items-center gap-2 uppercase tracking-widest">
+                        <span id="btnText">Run Compliance Review</span>
+                        <div id="spinner" class="hidden animate-spin h-5 w-5 border-2 border-navy border-t-transparent rounded-full"></div>
+                    </button>
                 </form>
 
-                <div id="resultContainer" class="hidden mt-10">
+                <div id="resultContainer" class="hidden mt-10 animate-fade-in">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="font-bold text-navy uppercase text-sm border-l-4 border-gold pl-3">Analysis & Drafts</h3>
                         <button onclick="copyResults()" class="text-xs font-bold text-navy border border-navy px-3 py-1 hover:bg-navy hover:text-white transition">
@@ -53,7 +54,6 @@
 </div>
 
 <script>
-    // Tab State Management
     function showTab(tab) {
         const fileDiv = document.getElementById('file-upload');
         const sectionDiv = document.getElementById('section-review');
@@ -73,7 +73,6 @@
         }
     }
 
-    // Submit & State Reset Logic
     document.getElementById('auditForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const submitBtn = document.getElementById('submitBtn');
@@ -82,11 +81,10 @@
         const resultContainer = document.getElementById('resultContainer');
         const output = document.getElementById('analysisOutput');
 
-        // 1. Reset UI State for New Request
         submitBtn.disabled = true;
         btnText.innerText = "Processing Legal Context...";
         spinner.classList.remove('hidden');
-        output.innerText = ""; // Clear old result
+        output.innerText = ""; 
         resultContainer.classList.add('hidden');
 
         const formData = new FormData(e.target);
@@ -98,23 +96,19 @@
             });
 
             if (!response.ok) throw new Error("API Failure");
-
             const data = await response.json();
             
-            // 2. Display Success
             output.innerText = data.answer;
             resultContainer.classList.remove('hidden');
             resultContainer.scrollIntoView({ behavior: 'smooth' });
-
-            // 3. Reset Form so Reject Tests don't carry over Contract A data
             e.target.reset();
 
         } catch (error) {
-            output.innerText = "Critical Error: The server could not process this document. Please ensure it is a valid digital PDF or text snippet.";
+            output.innerText = "Critical Error: Could not process document.";
             resultContainer.classList.remove('hidden');
         } finally {
             submitBtn.disabled = false;
-            btnText.innerText = "Run Compliance Audit";
+            btnText.innerText = "Run Compliance Review";
             spinner.classList.add('hidden');
         }
     });
@@ -122,13 +116,13 @@
     function copyResults() {
         const text = document.getElementById('analysisOutput').innerText;
         navigator.clipboard.writeText(text).then(() => {
-            alert("AReview report copied to clipboard.");
+            alert("Review report copied to clipboard.");
         });
     }
 </script>
 
-<!---
 <style>
+    
     .border-gold { border-color: #D4AF37 !important; }
     .bg-gold { background-color: #D4AF37 !important; }
     .text-navy { color: #002147; }
@@ -140,6 +134,4 @@
     }
     .animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
 </style>
-!--->
-
 {% endblock %}
