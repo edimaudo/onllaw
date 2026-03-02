@@ -99,3 +99,7 @@ async def get_lawyers_page(request: Request):
         "request": request, 
         "specialists": specialists
     })
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
