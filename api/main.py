@@ -50,7 +50,7 @@ async def handle_audit(file: UploadFile = File(None), clause_text: str = Form(No
     if not context or "Unsupported" in context:
         return {"answer": "Error: No readable text was provided for analysis."}
 
-   Specialized Review prompt
+   # Specialized Review prompt
     audit_prompt = (
         "Act as an Ontario Employment Law Expert. Audit the following text for ESA compliance.\n"
         "1. Identify any illegal or unenforceable clauses.\n"
