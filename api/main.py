@@ -38,9 +38,9 @@ async def handle_audit(file: UploadFile = File(None), clause_text: str = Form(No
         if context == "ERROR_IMAGE_ONLY_PDF":
             return {
                 "answer": (
-                    "🚨 SCANNED DOCUMENT DETECTED\n\n"
+                    "SCANNED DOCUMENT DETECTED\n\n"
                     "This PDF appears to be a scan or an image. Our system cannot read 'flat' text from images. "
-                    "To audit this, please upload a digital PDF (where you can highlight text) or "
+                    "To review this, please upload a digital PDF, docx, or doc file (where you can highlight text) or "
                     "manually paste the clauses into the 'Specific Clause' tab."
                 )
             }
@@ -50,19 +50,18 @@ async def handle_audit(file: UploadFile = File(None), clause_text: str = Form(No
     if not context or "Unsupported" in context:
         return {"answer": "Error: No readable text was provided for analysis."}
 
-    # 2. Specialized Auditor & Drafter Prompt
-    # This instructs the SAME agent to perform a specific task
-    audit_prompt = (
+   Specialized Review prompt
+    review_prompt = (
         "Act as an Ontario Employment Law Expert. Audit the following text for ESA compliance.\n"
-        "1. Identify any illegal or unenforceable clauses (e.g. termination notice).\n"
+        "1. Identify any illegal or unenforceable clauses.\n"
         "2. Suggest specific corrections.\n"
-        "3. PROVDE A DRAFT EMAIL at the end if an illegal clause was identified so that the user can send to HR to raise these concerns politely.\n\n"
-        "4. PROVDE A DRAFT EMAIL at the end if an illegal clause was identified so that the user can send to a lawyer to help tackle the illegal issue.\n\n"
+        "3.  If there is an illegal or unenforceable clause(s) PROVDE A DRAFT collaborative EMAIL to HR\n[Provide a collaborative email draft here]\n\n"
+        "4. If there is an illegal or unenforceable clause(s) provide a DRAFT SUMMARY FOR LAWYER\n[Provide a formal legal summary here]\n\n"
         f"CONTRACT CONTENT:\n{context}"
     )
     
     # 3. Call the Agent
-    analysis = await ask_esa_lawyer(audit_prompt)
+    analysis = await ask_esa_lawyer(review_prompt)
     return {"answer": analysis}
 
 
