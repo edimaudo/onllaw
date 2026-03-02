@@ -51,7 +51,7 @@ async def handle_audit(file: UploadFile = File(None), clause_text: str = Form(No
         return {"answer": "Error: No readable text was provided for analysis."}
 
    Specialized Review prompt
-    review_prompt = (
+    audit_prompt = (
         "Act as an Ontario Employment Law Expert. Audit the following text for ESA compliance.\n"
         "1. Identify any illegal or unenforceable clauses.\n"
         "2. Suggest specific corrections.\n"
@@ -61,7 +61,7 @@ async def handle_audit(file: UploadFile = File(None), clause_text: str = Form(No
     )
     
     # 3. Call the Agent
-    analysis = await ask_esa_lawyer(review_prompt)
+    analysis = await ask_esa_lawyer(audit_prompt)
     return {"answer": analysis}
 
 
