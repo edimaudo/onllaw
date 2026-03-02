@@ -5,9 +5,8 @@
 ## Key Features
 - **Employment Standards Q&A**: Summarized answers regarding Ontario employment rights.
 - **Dual-Mode Contract Audit**:
-    - **Full Audit**: Upload `.pdf` or `.docx` files for a comprehensive compliance check.
+    - **Full Audit**: Upload `.pdf`, `.doc`, `.docx` files for compliance check.
     - **Clause Spotlight**: Paste specific sections (e.g., Termination, Non-solicit) for targeted analysis.
-     - Ability to counter contract information if there are issues (coming soon)
 
 ## Technological Implementation
 - **AI Orchestration**: Airia
@@ -26,9 +25,7 @@ onllaw/
 │   ├── index.html      
 │   ├── qa.html         
 │   ├── audit.html      
-│   └── 404.html        
-├── static/
-     └── js/        
+│   └── 404.html              
 ├── requirements.txt    
 ├── vercel.json         
 └── README.md
