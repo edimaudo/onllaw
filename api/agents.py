@@ -63,15 +63,24 @@ async def ask_esa_lawyer(question: str):
                 enforce = answer.get("enforceability_status", "")
                 sections = answer.get("applicable_sections", "")
                 steps = answer.get("recommended_next_steps", "")
+                email_hr = answer.get("email_draft_hr", "")
+                email_lawyer = answer.get("email_draft_lawyer", "")
                 disclaimer = answer.get("disclaimer", "")
 
                 answer = (
-                    f"{summary}\n\n"
-                    f"STATUS\n{enforce}\n\n"
-                    f"APPLICABLE SECTIONS\n{sections}\n\n"
-                    f"NEXT STEPS\n{steps}\n\n"
-                    f"NOTICE:{disclaimer}"
+                    f"### LEGAL ANALYSIS\n{summary}\n\n"
+                    f"### STATUS\n{enforce}\n\n"
+                    f"### APPLICABLE SECTIONS\n{sections}\n\n"
+                    f"### RECOMMENDED NEXT STEPS\n{steps}\n\n"
                 )
+                
+                # Only add the email section if it actually exists
+                if email_hr:
+                    answer += f"### DRAFT HR EMAIL \n{email_hr}\n\n"
+                if email_lawyer:
+                    answer += f"### DRAFT lawyer EMAIL \n{email_lawyer}\n\n"
+                
+                answer += f"NOTICE: {disclaimer}"
 
             return str(answer)
 
