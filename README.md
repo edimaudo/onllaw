@@ -4,9 +4,9 @@
 
 ## Key Features
 - **Employment Standards Q&A**: Summarized answers regarding Ontario employment rights.
-- **Dual-Mode Contract Audit**:
-    - **Full Audit**: Upload `.pdf`, `.doc`, `.docx` files for compliance check.
-    - **Clause Spotlight**: Paste specific sections (e.g., Termination, Non-solicit) for targeted analysis.
+- **Dual-Mode Contract Review**:
+    - **Full Review**: Upload `.pdf`, `.doc`, `.docx` files for compliance check.
+    - **Clause Spotlight**: Paste specific sections (e.g., Termination, Non-solicit) for targeted review.
 
 ## Technological Implementation
 - **AI Orchestration**: Airia
