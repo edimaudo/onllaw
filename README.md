@@ -24,7 +24,8 @@ onllaw/
 │   ├── base.html       
 │   ├── index.html      
 │   ├── qa.html         
-│   ├── audit.html      
+│   ├── audit.html
+│   ├── lawyer.html     
 │   └── 404.html              
 ├── requirements.txt    
 ├── vercel.json         
