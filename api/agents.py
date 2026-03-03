@@ -1,6 +1,7 @@
 import os
 import httpx
 import json
+from fastapi import HTTPException
 
 AIRIA_API_URL = os.getenv("AIRIA_API_URL")
 AIRIA_KEY = os.getenv("AIRIA_API_KEY")
