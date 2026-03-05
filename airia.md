@@ -4,7 +4,7 @@ onllaw
 This is the idea I am thinking of building.  It is a web app called onllaw.  Context: A lot of people in Ontario, Canada are taken advantage of when giving employment contracts or severance.  The goal is to democratize this information and empower employees to ask better questions and know their rights.  It will be built using (agentic AI would be the main tool). The key reference material would be (https://www.ontario.ca/laws/statute/00e41). I will provide a word file of the site as well.  In terms of features, it two core features employment standards Q&A and contract review.  For employment standards Q&A, user would be able to ask a question regarding employment standards.  For the second option, the user would have the ability to upload an employment contract, the app would analyze it and highlight key information, potential key issues as well.  The user can then ask questions as well.  they user would also have the ability to contact employment lawyers in ontario (focus will be on the GTA for now), .  It would also provide an email draft that a succint based on the issue highlighted in the contract.  
 Rate it on a scale of 1 to 10 using the judging criteria and provide clear reasoning on why that line of thinking was created. Second provide 2-3 suggestions on how to improve it, if it does not score at least a 9 out of 10.   
 
-Judging criteria
+## Judging criteria
 Technological Implementation
 Does the project demonstrate quality software development? Does the project thoroughly leverage the required tool? How is the quality of the code?
 Design
@@ -18,9 +18,11 @@ interesting, can it read a web page like this (https://www.ontario.ca/laws/statu
 
 Helvetica, Century Schoolbook, Montserrat, Lato
 
+### bad text
+"RECIPE FOR APPLE PIE: 1. Preheat oven to 375. 2. Mix flour and butter. 3. Bake for 45 minutes. WARNING: This pie is hot."
 
-
-
+### q&A
+I'm applying for a job; do they have to tell me the salary range under the 2026 rules?"
 
 
 AIRIA_API_URL
