@@ -5,32 +5,34 @@ from docx import Document
 import io
 
 def extract_text_from_file(file_bytes: bytes, filename: str) -> str:
-    """Detects file type and extracts text using lightweight libraries."""
+    """
+    Standard text extraction
+    """
     ext = filename.split('.')[-1].lower()
-    
-    if ext == 'pdf':
-        doc = fitz.open(stream=file_bytes, filetype="pdf")
-        text = ""
-        for page in doc:
-            text += page.get_text("text") + "\n"
-        
-        if not text.strip() and len(doc) > 0:
-            return "ERROR_IMAGE_ONLY_PDF"
+
+    try:
+        if ext == 'pdf':
+            with fitz.open(stream=file_bytes, filetype="pdf") as doc:
+                if doc.page_count == 0:
+                    return "ERROR_EMPTY_FILE"
+                
+                # Joins all page text into a single string
+                text = "\n".join([page.get_text() for page in doc])
             
-        return text
+            return text.strip() if text.strip() else "ERROR_IMAGE_ONLY_PDF"
 
-    elif ext in ['docx', 'doc']:
-        f = io.BytesIO(file_bytes)
-        try:
-            doc = Document(f)
-            return "\n".join([para.text for para in doc.paragraphs])
-        except:
-            return "ERROR_CORRUPT_WORD"
+        elif ext in ['docx', 'doc']:
+            with io.BytesIO(file_bytes) as docx_stream:
+                doc = Document(docx_stream)
+                text = "\n".join([para.text for para in doc.paragraphs])
+                return text.strip() if text.strip() else "ERROR_EMPTY_FILE"
 
-    return "Unsupported file format."
+    except Exception:
+        return "ERROR_PROCESSING_DOCUMENT"
 
-
+    return "ERROR_UNSUPPORTED_FORMAT"
 
 def chunk_text(text: str, max_chars: int = 5000):
-    """Utility to break large contracts into digestible parts for the AI."""
-    return [text[i:i+max_chars] for i in range(0, len(text), max_chars)]
+    """Generator for chunking large text without high memory overhead."""
+    for i in range(0, len(text), max_chars):
+        yield text[i:i + max_chars]
