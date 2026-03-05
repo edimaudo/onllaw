@@ -1,8 +1,10 @@
 {
+  "version": 2,
   "functions": {
     "api/main.py": {
-      "runtime": "python@3.9",
-      "memory": 1024
+      "runtime": "python@3.12",
+      "memory": 1024,
+      "maxDuration": 10
     }
   },
   "rewrites": [
