@@ -7,10 +7,9 @@ AIRIA_API_URL = os.getenv("AIRIA_API_URL")
 AIRIA_KEY = os.getenv("AIRIA_API_KEY")
 AIRIA_AGENT_ID = os.getenv("AIRIA_AGENT_ID")
 
-
 async def ask_esa_lawyer(question: str):
     """
-    Logic to communicate with the Airia execution endpoint.
+    communicate with the Airia execution endpoint.
     """
 
     if not AIRIA_KEY or not AIRIA_AGENT_ID:
