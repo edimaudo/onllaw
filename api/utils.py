@@ -5,9 +5,7 @@ from docx import Document
 import io
 
 def extract_text_from_file(file_bytes: bytes, filename: str) -> str:
-    """
-    text extraction
-    """
+    """text extraction"""
     ext = filename.split('.')[-1].lower()
 
     try:
