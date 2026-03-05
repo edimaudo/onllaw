@@ -31,7 +31,7 @@ async def ask_esa_lawyer(question: str):
         try:
             # 3. Execution call
             response = await client.post(
-                AIRIA_API_URL, json=payload, headers=headers, timeout=10 #60.0
+                AIRIA_API_URL, json=payload, headers=headers, timeout=60.0
             )
 
             response.raise_for_status()
