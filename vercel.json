@@ -4,7 +4,7 @@
     {
       "src": "api/main.py",
       "use": "@vercel/python",
-      "config": { "maxDuration": 60, "memory": 1024 }
+      "config": { "maxDuration": 120, "memory": 1024 }
     }
   ],
   "rewrites": [
