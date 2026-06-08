@@ -20,12 +20,12 @@ async def landing(request: Request):
 async def custom_404_handler(request: Request, __):
     return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
 
-@app.get("/api/audit", response_class=HTMLResponse)
+@app.get("/audit", response_class=HTMLResponse)
 async def get_qa_page(request: Request):
     """Reasoning: This renders the UI when the user clicks the link."""
     return templates.TemplateResponse("audit.html", {"request": request})
 
-@app.post("/api/audit")
+@app.post("/audit")
 async def handle_audit(file: UploadFile = File(None), clause_text: str = Form(None)):
     context = ""
     
@@ -65,19 +65,19 @@ async def handle_audit(file: UploadFile = File(None), clause_text: str = Form(No
     return {"answer": analysis}
 
 
-@app.get("/api/qa", response_class=HTMLResponse)
+@app.get("/qa", response_class=HTMLResponse)
 async def get_qa_page(request: Request):
     """Reasoning: This renders the UI when the user clicks the link."""
     return templates.TemplateResponse("qa.html", {"request": request})
 
-@app.post("/api/qa")
+@app.post("/qa")
 async def handle_qa_logic(question: str = Form(...)):
     """Reasoning: This processes the actual AI question after the user hits submit."""
     answer = await ask_esa_lawyer(question)
     return {"answer": answer}
     return response
 
-@app.get("/api/lawyers", response_class=HTMLResponse)
+@app.get("/lawyers", response_class=HTMLResponse)
 async def get_lawyers_page(request: Request):
     """
     Serves the list of LSO Certified Specialists. 
