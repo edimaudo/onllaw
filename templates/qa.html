@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="bg-[#002147] min-h-screen">
+<div class="bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-colors duration-300">
     <div class="max-w-4xl mx-auto py-12 px-6">
-        <h2 class="text-3xl font-bold text-white mb-2">Employee Q&A</h2>
-        <p class="text-gray-300 mb-8">Consult the Ontario Employment Standards Act.</p>
+        <h2 class="text-3xl font-bold mb-2">Employee Q&A</h2>
+        <p class="opacity-80 mb-8">Consult the Employment Standards Act.</p>
 
-        <div class="bg-white p-8 border border-gray-200 shadow-sm">
+        <div class="bg-[var(--bg-card)] p-4 md:p-8 border border-[var(--border-color)] shadow-sm">
             <form id="qaForm">
                 <div class="mb-6">
-                    <label class="block text-sm font-bold text-navy mb-2 uppercase">Your Inquiry</label>
+                    <label for="question" class="block text-sm font-bold mb-2 uppercase">Your Inquiry</label>
                     <textarea id="question" name="question" required
-                        class="w-full h-32 p-4 border border-gray-200 shadow-sm outline-none transition legal-text text-navy"
+                        class="w-full h-32 p-4 border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-sm outline-none transition legal-text"
                         placeholder="Enter your question regarding Ontario employment rights..."></textarea>
                 </div>
 
@@ -21,10 +21,9 @@
                 </button>
             </form>
 
-            <div id="resultContainer" class="hidden mt-8 p-6 bg-gray-50 border-t-2 border-yellow-500">
-                <h3 class="font-bold text-navy mb-2 uppercase text-sm">Legal Information Summary</h3>
-                <div id="answerArea" class="legal-text leading-relaxed text-navy whitespace-pre-wrap" style="white-space: pre-wrap;"></div>
-                
+            <div id="resultContainer" class="hidden mt-8 p-6 bg-gray-100/10 border-t-2 border-yellow-500">
+                <h3 class="font-bold mb-2 uppercase text-sm">Legal Information Summary</h3>
+                <div id="answerArea" class="legal-text leading-relaxed whitespace-pre-wrap" style="white-space: pre-wrap;"></div>
             </div>
         </div>
     </div>
@@ -39,7 +38,6 @@ document.getElementById('qaForm').addEventListener('submit', async (e) => {
     const resultContainer = document.getElementById('resultContainer');
     const answerArea = document.getElementById('answerArea');
 
-    // UI State: Loading
     submitBtn.disabled = true;
     submitBtn.innerText = "Consulting the Employment Service Act (ESA)...";
     resultContainer.classList.add('hidden');
@@ -56,22 +54,14 @@ document.getElementById('qaForm').addEventListener('submit', async (e) => {
         if (!response.ok) throw new Error('Network response was not ok');
 
         const data = await response.json();
-
-        // UI State: Success
         resultContainer.classList.remove('hidden');
-
-        /* INTEGRATION POINT:
-           We use innerText because the backend is now sending a clean string. 
-           innerText combined with whitespace-pre-wrap ensures the line breaks 
-           look like proper paragraphs.
-        */
         answerArea.innerText = data.answer || "No specific guidance found for this inquiry.";
 
     } catch (error) {
         console.error('Error:', error);
         resultContainer.classList.remove('hidden');
         answerArea.innerText = "An error occurred while communicating with the system. Please check the console for details.";
-    } finally {
+    } finaly {
         submitBtn.disabled = false;
         submitBtn.innerText = "SUBMIT INQUIRY";
     }
