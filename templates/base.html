@@ -146,6 +146,8 @@
             } else {
                 updateThemeButtonText(false);
             }
+
+            updatePageProvinceText();
         });
 
         function changeFontSize(size) {
@@ -161,6 +163,18 @@
             const isDark = document.documentElement.classList.toggle('dark-theme');
             localStorage.setItem('preferred-theme', isDark ? 'dark' : 'light');
             updateThemeButtonText(isDark);
+        }
+
+        // Function to update any text on the page tracking the active province
+        function updatePageProvinceText() {
+            const dropdown = document.getElementById('province-select');
+            const dynamicTextSpan = document.getElementById('dynamic-province-text');
+            
+            if (dropdown && dynamicTextSpan) {
+                // Get the full text name (e.g., "British Columbia") instead of the value ("BC")
+                const selectedProvinceName = dropdown.options[dropdown.selectedIndex].text;
+                dynamicTextSpan.innerText = selectedProvinceName;
+            }
         }
     </script>
 </body>
