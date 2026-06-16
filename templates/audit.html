@@ -1,52 +1,53 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-colors duration-300">
-    <div class="max-w-4xl mx-auto py-12 px-6">
+<div class="min-h-screen py-12 px-6">
+    <div class="max-w-4xl mx-auto">
         <h2 class="text-3xl font-bold mb-2">Employment Contract Review</h2>
         <p class="opacity-80 mb-8">Analyze your employment contract or specific clauses for ESA compliance.</p>
         
-        <div class="bg-[var(--bg-card)] p-1 shadow-2xl border border-[var(--border-color)]">
-            <div class="flex border-b border-[var(--border-color)] bg-gray-50/5 text-gray-700">
+        <div class="bg-[var(--bg-card)] p-1 shadow-2xl border-t-4 border-[var(--border-color)]">
+            <!-- Dynamic Sub-Navigation Tab Panel Elements -->
+            <div class="flex border-b border-gray-200 bg-gray-50 text-gray-700">
                 <button id="tab-file-btn" onclick="showTab('file')" 
-                    class="py-4 px-8 border-b-2 border-gold font-bold text-[var(--text-primary)] transition-all">
+                    class="py-4 px-8 border-b-2 border-gold font-bold text-[#002147] transition-all">
                     Full Document
                 </button>
                 <button id="tab-section-btn" onclick="showTab('section')" 
-                    class="py-4 px-8 text-gray-400 hover:text-[var(--text-primary)] border-b-2 border-transparent transition-all">
+                    class="py-4 px-8 text-gray-400 hover:text-[#002147] border-b-2 border-transparent transition-all">
                     Specific Clause
                 </button>
             </div>
             
-            <div class="p-4 md:p-8">
+            <div class="p-6 md:p-8 text-[#002147]">
                 <form id="auditForm" enctype="multipart/form-data">
                     <div id="file-upload" class="py-4">
-                        <label for="contractFile" class="block text-sm font-bold mb-4 uppercase">Upload Contract (.pdf, .doc, .docx)</label>
+                        <label for="contractFile" class="block text-sm font-bold mb-4 uppercase tracking-wider">Upload Contract (.pdf, .doc, .docx)</label>
                         <input type="file" id="contractFile" name="file" accept=".pdf,.doc,.docx" 
-                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-6 file:border-0 file:text-sm file:font-bold file:bg-navy file:text-white hover:file:bg-opacity-90 cursor-pointer">
+                            class="block w-full text-sm text-gray-600 file:mr-4 file:py-3 file:px-6 file:border-0 file:text-sm file:font-bold file:bg-[#002147] file:text-white hover:file:bg-opacity-90 cursor-pointer">
                     </div>
 
                     <div id="section-review" class="py-4 hidden">
-                        <label id="clause-label" class="block text-sm font-bold mb-2 uppercase">Paste Contract Text</label>
+                        <label id="clause-label" class="block text-sm font-bold mb-2 uppercase tracking-wider">Paste Contract Text</label>
                         <textarea name="clause_text" aria-labelledby="clause-label"
-                            class="w-full h-48 p-4 border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] outline-none focus:border-gold transition" 
+                            class="w-full h-48 p-4 border border-gray-300 bg-white text-[#002147] outline-none focus:border-gold transition" 
                             placeholder="Paste the specific paragraph or clause here..."></textarea>
                     </div>
 
-                    <button type="submit" id="submitBtn" class="bg-gold text-[#002147] font-bold w-full py-4 flex justify-center items-center gap-2 uppercase tracking-widest">
+                    <button type="submit" id="submitBtn" class="btn-core-action w-full py-4 flex justify-center items-center gap-2">
                         <span id="btnText">Run Compliance Review</span>
                         <div id="spinner" class="hidden animate-spin h-5 w-5 border-2 border-[#002147] border-t-transparent rounded-full"></div>
                     </button>
                 </form>
 
-                <div id="resultContainer" class="hidden mt-10 animate-fade-in">
+                <div id="resultContainer" class="hidden mt-10">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="font-bold uppercase text-sm border-l-4 border-gold pl-3">Analysis & Drafts</h3>
-                        <button onclick="copyResults()" class="text-xs font-bold border border-gold text-gold px-3 py-1 hover:bg-gold hover:text-[#002147] transition">
+                        <button onclick="copyResults()" class="text-xs font-bold border border-[#002147] text-[#002147] px-3 py-1 hover:bg-[#002147] hover:text-white transition">
                             COPY ALL
                         </button>
                     </div>
-                    <div id="analysisOutput" class="p-6 bg-gray-100/10 text-[var(--text-primary)] leading-relaxed whitespace-pre-wrap border border-[var(--border-color)] italic"></div>
+                    <div id="analysisOutput" class="p-6 bg-gray-50 text-[#002147] leading-relaxed whitespace-pre-wrap border border-gray-200 italic rounded"></div>
                 </div>
             </div>
         </div>
@@ -63,13 +64,13 @@
         if (tab === 'file') {
             fileDiv.classList.remove('hidden');
             sectionDiv.classList.add('hidden');
-            fileBtn.className = "py-4 px-8 border-b-2 border-gold font-bold text-[var(--text-primary)] transition-all";
-            sectionBtn.className = "py-4 px-8 text-gray-400 hover:text-[var(--text-primary)] border-b-2 border-transparent transition-all";
+            fileBtn.className = "py-4 px-8 border-b-2 border-gold font-bold text-[#002147] transition-all";
+            sectionBtn.className = "py-4 px-8 text-gray-400 hover:text-[#002147] border-b-2 border-transparent transition-all";
         } else {
             fileDiv.classList.add('hidden');
             sectionDiv.classList.remove('hidden');
-            sectionBtn.className = "py-4 px-8 border-b-2 border-gold font-bold text-[var(--text-primary)] transition-all";
-            fileBtn.className = "py-4 px-8 text-gray-400 hover:text-[var(--text-primary)] border-b-2 border-transparent transition-all";
+            sectionBtn.className = "py-4 px-8 border-b-2 border-gold font-bold text-[#002147] transition-all";
+            fileBtn.className = "py-4 px-8 text-gray-400 hover:text-[#002147] border-b-2 border-transparent transition-all";
         }
     }
 
@@ -94,7 +95,6 @@
                 method: 'POST',
                 body: formData
             });
-
             if (!response.ok) throw new Error("API Failure");
             const data = await response.json();
             
@@ -102,7 +102,6 @@
             resultContainer.classList.remove('hidden');
             resultContainer.scrollIntoView({ behavior: 'smooth' });
             e.target.reset();
-
         } catch (error) {
             output.innerText = "Critical Error: Could not process document.";
             resultContainer.classList.remove('hidden');
@@ -120,12 +119,4 @@
         });
     }
 </script>
-
-<style>
-    @keyframes fade-in {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
-</style>
 {% endblock %}
