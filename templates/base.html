@@ -147,7 +147,19 @@
                 updateThemeButtonText(false);
             }
 
-            updatePageProvinceText();
+
+                const savedProvince = localStorage.getItem('preferred-province');
+                if (dropdown && savedProvince) {
+                    dropdown.value = savedProvince;
+                }
+            
+        
+                if (dropdown) {
+                    dropdown.addEventListener('change', updatePageProvinceText);
+                }
+            
+               
+                updatePageProvinceText();
         });
 
         function changeFontSize(size) {
@@ -164,16 +176,20 @@
             localStorage.setItem('preferred-theme', isDark ? 'dark' : 'light');
             updateThemeButtonText(isDark);
         }
-
-        // Function to update any text on the page tracking the active province
+        // Function to update the page prose text based on what is selected
         function updatePageProvinceText() {
             const dropdown = document.getElementById('province-select');
             const dynamicTextSpan = document.getElementById('dynamic-province-text');
             
-            if (dropdown && dynamicTextSpan) {
-                // Get the full text name (e.g., "British Columbia") instead of the value ("BC")
-                const selectedProvinceName = dropdown.options[dropdown.selectedIndex].text;
-                dynamicTextSpan.innerText = selectedProvinceName;
+            if (dropdown) {
+                // Save the selection code (e.g. "BC", "ON") to localStorage
+                localStorage.setItem('preferred-province', dropdown.value);
+                
+                // If the current page contains our text hook, swap the wording
+                if (dynamicTextSpan) {
+                    const selectedProvinceName = dropdown.options[dropdown.selectedIndex].text;
+                    dynamicTextSpan.innerText = selectedProvinceName;
+                }
             }
         }
     </script>
