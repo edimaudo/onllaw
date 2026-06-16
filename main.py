@@ -77,28 +77,28 @@ async def handle_qa_logic(question: str = Form(...)):
     return {"answer": answer}
     return response
 
-@app.get("/lawyers", response_class=HTMLResponse)
-async def get_lawyers_page(request: Request):
-    """
-    Serves the list of LSO Certified Specialists. 
-    """
-    specialists = [
-        {"name": "S. Margot Blight", "firm": "S. Margot Blight, Lawyer", "city": "Mississauga"},
-        {"name": "David Bannon", "firm": "Hicks Morley Hamilton Stewart Storie LLP", "city": "Toronto"},
-        {"name": "Matthew Louis Certosimo", "firm": "Borden Ladner Gervais LLP", "city": "Toronto"},
-        {"name": "Patrick Michael Rory Groom", "firm": "McMillan LLP", "city": "Toronto"},
-        {"name": "John Hyde", "firm": "Hyde HR Law", "city": "Toronto"},
-        {"name": "Donald B. Jarvis", "firm": "Filion Wakely Thorup Angeletti LLP", "city": "Toronto"},
-        {"name": "Jeffrey David Arthur Murray", "firm": "Stringer LLP", "city": "Toronto"},
-        {"name": "Garth O'Neill", "firm": "GOLaw Professional Corporation", "city": "Thunder Bay"},
-        {"name": "Donald Shanks", "firm": "Cheadles LLP", "city": "Thunder Bay"},
-        {"name": "Ronald Snyder", "firm": "Xphoria Spirits Inc.", "city": "Ottawa"}
-    ]
+# @app.get("/lawyers", response_class=HTMLResponse)
+# async def get_lawyers_page(request: Request):
+#     """
+#     Serves the list of LSO Certified Specialists. 
+#     """
+#     specialists = [
+#         {"name": "S. Margot Blight", "firm": "S. Margot Blight, Lawyer", "city": "Mississauga"},
+#         {"name": "David Bannon", "firm": "Hicks Morley Hamilton Stewart Storie LLP", "city": "Toronto"},
+#         {"name": "Matthew Louis Certosimo", "firm": "Borden Ladner Gervais LLP", "city": "Toronto"},
+#         {"name": "Patrick Michael Rory Groom", "firm": "McMillan LLP", "city": "Toronto"},
+#         {"name": "John Hyde", "firm": "Hyde HR Law", "city": "Toronto"},
+#         {"name": "Donald B. Jarvis", "firm": "Filion Wakely Thorup Angeletti LLP", "city": "Toronto"},
+#         {"name": "Jeffrey David Arthur Murray", "firm": "Stringer LLP", "city": "Toronto"},
+#         {"name": "Garth O'Neill", "firm": "GOLaw Professional Corporation", "city": "Thunder Bay"},
+#         {"name": "Donald Shanks", "firm": "Cheadles LLP", "city": "Thunder Bay"},
+#         {"name": "Ronald Snyder", "firm": "Xphoria Spirits Inc.", "city": "Ottawa"}
+#     ]
     
-    return templates.TemplateResponse("lawyers.html", {
-        "request": request, 
-        "specialists": specialists
-    })
+#     return templates.TemplateResponse("lawyers.html", {
+#         "request": request, 
+#         "specialists": specialists
+#     })
 
 if __name__ == "__main__":
     import uvicorn
