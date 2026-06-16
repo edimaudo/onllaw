@@ -6,65 +6,166 @@
     <title>{% block title %}onllaw{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --navy: #002147; --light-gray: #F5F5F5; --gold: #D4AF37; }
-        body { font-family: 'Century Schoolbook Montserrat Lato', sans-serif; background-color: white; color: var(--navy); }
-        h1, h2, h3 { font-family: 'Century Schoolbook Montserrat Lato', sans-serif; }
-        .legal-text { font-family: 'Century Schoolbook Montserrat Lato', serif; }
+        /* CSS Variables to handle global accessibility styles */
+        :root { 
+            --navy: #002147; 
+            --light-gray: #F5F5F5; 
+            --gold: #D4AF37; 
+            --gold-hover: #B8962E;
+            
+            /* Theme defaults (Light Mode) */
+            --bg-primary: #ffffff;
+            --text-primary: #002147;
+            --bg-card: #f9fafb;
+            --border-color: #e5e7eb;
+        }
+
+        /* Dark Mode variables - applied to content pages */
+        .dark-theme {
+            --bg-primary: #0a192f;
+            --text-primary: #f3f4f6;
+            --bg-card: #112240;
+            --border-color: #30363d;
+        }
+
+        /* Dynamic Font Sizing classes */
+        .font-size-small { font-size: 14px; }
+        .font-size-medium { font-size: 16px; }
+        .font-size-large { font-size: 19px; }
+
+        body { 
+            font-family: 'Century Schoolbook', 'Montserrat', 'Lato', sans-serif; 
+            background-color: var(--bg-primary); 
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s, font-size 0.2s;
+        }
+        
         .bg-navy { background-color: var(--navy); }
-        .btn-gold { background-color: var(--gold); color: white; transition: 0.3s; }
-        .btn-gold:hover { background-color: #B8962E; transform: translateY(-1px); }
+        .btn-gold { background-color: var(--gold); color: #002147; transition: 0.3s; }
+        .btn-gold:hover { background-color: var(--gold-hover); transform: translateY(-1px); }
         .border-gold { border-color: var(--gold); }
-        /* Ensure the Gold color is defined if Tailwind misses it */
-    .bg-gold { 
-        background-color: #D4AF37 !important; 
-    }
-    
-    /* Force the button to look like a high-action element */
-    #submitBtn {
-        display: block;
-        width: 100%;
-        padding: 1rem;
-        border-radius: 4px;
-        color: #002147; /* Navy text */
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        cursor: pointer;
-        border: none;
-        transition: all 0.2s ease;
-    }
+        
+        #submitBtn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 4px;
+            color: #002147;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+        #submitBtn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        #submitBtn:disabled { background-color: #cccccc !important; cursor: not-allowed; }
 
-    #submitBtn:hover {
-        filter: brightness(1.1);
-        transform: translateY(-1px);
-    }
-
-    #submitBtn:disabled {
-        background-color: #cccccc !important;
-        cursor: not-allowed;
-    }
+        /* WCAG Focus outline helper */
+        *:focus-visible {
+            outline: 3px solid var(--gold) !important;
+            outline-offset: 2px;
+        }
     </style>
 </head>
-<body class="flex flex-col min-h-screen">
-    <nav class="p-6 bg-white border-b border-gray-100 flex justify-between items-center sticky top-0 z-50">
-        <a href="/" class="text-2xl font-bold tracking-tighter text-navy flex items-center">
-            <span class="text-gold mr-1"></span> onllaw
+<body class="flex flex-col min-h-screen font-size-medium">
+    
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:p-4 focus:bg-white focus:text-navy focus:z-50 border-2 border-gold">
+        Skip to main content
+    </a>
+
+    <nav class="p-4 md:p-6 bg-white border-b border-gray-100 flex flex-wrap justify-between items-center sticky top-0 z-50">
+        <a href="/" class="text-2xl font-bold tracking-tighter text-[#002147] flex items-center" aria-label="onllaw Home">
+            onllaw
         </a>
-        <div class="space-x-8 font-semibold text-sm uppercase tracking-widest hidden md:flex text-navy">
-            <a href="qa" class="hover:text-[var(--gold)] transition duration-300">Q&A</a>
-            <a href="/audit" class="hover:text-[var(--gold)] transition duration-300">Contract Review</a>
-            <a href="/lawyers" class="hover:text-[var(--gold)] transition duration-300">Lawyers</a>
+        
+        <div class="flex flex-wrap items-center gap-4 mt-4 md:mt-0 w-full md:w-auto justify-between md:justify-end">
+            
+            <div class="flex items-center gap-3 bg-gray-100 p-2 rounded-md" role="region" aria-label="Accessibility Controls">
+                <div class="flex items-center gap-1 border-r border-gray-300 pr-2">
+                    <span class="text-xs font-bold text-[#002147] mr-1" id="fs-label">A:</span>
+                    <button onclick="changeFontSize('small')" class="px-2 py-1 text-xs font-medium bg-white rounded border hover:bg-gray-200 text-[#002147]" aria-describedby="fs-label">Small</button>
+                    <button onclick="changeFontSize('medium')" class="px-2 py-1 text-xs font-bold bg-white rounded border hover:bg-gray-200 text-[#002147]" aria-describedby="fs-label">Med</button>
+                    <button onclick="changeFontSize('large')" class="px-2 py-1 text-sm font-black bg-white rounded border hover:bg-gray-200 text-[#002147]" aria-describedby="fs-label">Large</button>
+                </div>
+                
+                <button id="theme-toggle" onclick="toggleTheme()" class="px-3 py-1 text-xs font-bold bg-[#002147] text-white rounded hover:bg-opacity-90" aria-label="Toggle dark and light mode">
+                    Theme
+                </button>
+            </div>
+
+            <div id="province-selector-container" class="flex items-center gap-2">
+                <label for="province-select" class="text-xs font-bold uppercase tracking-wider text-[#002147]">Province:</label>
+                <select id="province-select" class="p-1.5 text-xs font-semibold bg-white border border-gray-300 rounded text-[#002147] focus:border-gold">
+                    <option value="AB">Alberta</option>
+                    <option value="BC">British Columbia</option>
+                    <option value="MB">Manitoba</option>
+                    <option value="NB">New Brunswick</option>
+                    <option value="NL">Newfoundland and Labrador</option>
+                    <option value="NS">Nova Scotia</option>
+                    <option value="ON" selected>Ontario</option>
+                    <option value="PE">Prince Edward Island</option>
+                    <option value="QC">Quebec</option>
+                    <option value="SK">Saskatchewan</option>
+                </select>
+            </div>
+
+            <div class="space-x-4 md:space-x-8 font-semibold text-sm uppercase tracking-widest flex text-[#002147]">
+                <a href="qa" class="hover:text-[#D4AF37] transition duration-300">Q&A</a>
+                <a href="/audit" class="hover:text-[#D4AF37] transition duration-300">Contract Review</a>
+                <a href="/lawyers" class="hover:text-[#D4AF37] transition duration-300">Lawyers</a>
+            </div>
         </div>
     </nav>
 
-    <main class="flex-grow">
+    <main class="flex-grow" id="main-content">
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-navy text-white py-12 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
+    <footer class="bg-[#002147] text-white py-12 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <p class="text-sm opacity-70">© 2026 onllaw. Legal info only, not legal advice.</p>
         </div>
     </footer>
+
+    <script>
+        // Check current page to conditionally hide the province dropdown on index.html
+        window.addEventListener('DOMContentLoaded', () => {
+            const path = window.location.pathname;
+            if (path === '/' || path.endsWith('index.html') || path === '') {
+                const container = document.getElementById('province-selector-container');
+                if (container) container.style.setProperty('display', 'none', 'important');
+            }
+            
+            // Rehydrate accessibility options from localStorage if saved
+            const savedSize = localStorage.getItem('preferred-font-size');
+            if (savedSize) changeFontSize(savedSize);
+
+            const savedTheme = localStorage.getItem('preferred-theme');
+            if (savedTheme === 'dark') {
+                // Ensure page isn't index.html before loading dark mode
+                if (!(path === '/' || path.endsWith('index.html') || path === '')) {
+                    document.documentElement.classList.add('dark-theme');
+                }
+            }
+        });
+
+        function changeFontSize(size) {
+            const body = document.body;
+            body.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+            body.classList.add(`font-size-${size}`);
+            localStorage.setItem('preferred-font-size', size);
+        }
+
+        function toggleTheme() {
+            // Prevent theme changing on index.html per requirements
+            const path = window.location.pathname;
+            if (path === '/' || path.endsWith('index.html') || path === '') {
+                return;
+            }
+            const isDark = document.documentElement.classList.toggle('dark-theme');
+            localStorage.setItem('preferred-theme', isDark ? 'dark' : 'light');
+        }
+    </script>
 </body>
 </html>
