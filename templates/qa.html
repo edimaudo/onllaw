@@ -15,7 +15,7 @@
                     <!-- Input box matches theme variables so text contrast remains compliant -->
                     <textarea id="question" name="question" required
                         class="w-full h-32 p-4 border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-sm outline-none transition legal-text"
-                        placeholder="Enter your question regarding Ontario employment rights..."></textarea>
+                        placeholder="Enter your question regarding Employment rights..."></textarea>
                 </div>
 
                 <!-- Replaced hardcoded bg-navy with global core action button for high contrast -->
@@ -49,7 +49,7 @@ document.getElementById('qaForm').addEventListener('submit', async (e) => {
         const formData = new FormData();
         formData.append('question', questionInput.value);
 
-        const response = await fetch('/api/qa', {
+        const response = await fetch('/qa', {
             method: 'POST',
             body: formData 
         });
