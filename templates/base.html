@@ -119,83 +119,91 @@
         </div>
     </footer>
 
-    <script>
-        function updateThemeButtonText(isDark) {
-            const themeBtn = document.getElementById('theme-toggle');
-            if (themeBtn) {
-                themeBtn.innerText = isDark ? "Theme: Dark" : "Theme: Light";
-            }
+<script>
+    function updateThemeButtonText(isDark) {
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) {
+            themeBtn.innerText = isDark ? "Theme: Dark" : "Theme: Light";
         }
+    }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const path = window.location.pathname;
-            if (path === '/' || path.endsWith('index.html') || path === '') {
-                const container = document.getElementById('province-selector-container');
-                if (container) container.style.setProperty('display', 'none', 'important');
-            }
-            
-            const savedSize = localStorage.getItem('preferred-font-size');
-            if (savedSize) changeFontSize(savedSize);
-
-            const savedTheme = localStorage.getItem('preferred-theme');
-            const isDark = savedTheme === 'dark';
-            
-            if (isDark && !(path === '/' || path.endsWith('index.html') || path === '')) {
-                document.documentElement.classList.add('dark-theme');
-                updateThemeButtonText(true);
-            } else {
-                updateThemeButtonText(false);
-            }
-
-
-                const savedProvince = localStorage.getItem('preferred-province');
-                if (dropdown && savedProvince) {
-                    dropdown.value = savedProvince;
-                }
-            
+    window.addEventListener('DOMContentLoaded', () => {
+        const path = window.location.pathname;
         
-                if (dropdown) {
-                    dropdown.addEventListener('change', updatePageProvinceText);
-                }
-            
-               
-               if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                    setTimeout(updatePageProvinceText, 1);
-                } else {
-                    window.addEventListener('load', updatePageProvinceText);
-                }
-        });
+        // FIX: Define dropdown right away so the lines below can safely reference it
+        const dropdown = document.getElementById('province-select');
 
-        function changeFontSize(size) {
-            document.body.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
-            document.body.classList.add(`font-size-${size}`);
-            localStorage.setItem('preferred-font-size', size);
+        // 1. Hide the province container on index.html
+        if (path === '/' || path.endsWith('index.html') || path === '') {
+            const container = document.getElementById('province-selector-container');
+            if (container) container.style.setProperty('display', 'none', 'important');
+        }
+        
+        // 2. Rehydrate font size settings
+        const savedSize = localStorage.getItem('preferred-font-size');
+        if (savedSize) changeFontSize(savedSize);
+
+        // 3. Rehydrate theme preference
+        const savedTheme = localStorage.getItem('preferred-theme');
+        const isDark = savedTheme === 'dark';
+        
+        if (isDark && !(path === '/' || path.endsWith('index.html') || path === '')) {
+            document.documentElement.classList.add('dark-theme');
+            updateThemeButtonText(true);
+        } else {
+            updateThemeButtonText(false);
         }
 
-        function toggleTheme() {
-            const path = window.location.pathname;
-            if (path === '/' || path.endsWith('index.html') || path === '') return;
-            
-            const isDark = document.documentElement.classList.toggle('dark-theme');
-            localStorage.setItem('preferred-theme', isDark ? 'dark' : 'light');
-            updateThemeButtonText(isDark);
+        // 4. PERSISTENCE: Restore the user's saved province selection
+        const savedProvince = localStorage.getItem('preferred-province');
+        if (dropdown && savedProvince) {
+            dropdown.value = savedProvince;
         }
-        // Function to update the page prose text based on what is selected
-        function updatePageProvinceText() {
-            const dropdown = document.getElementById('province-select');
-            const dynamicTextSpan = document.getElementById('dynamic-province-text');
+        
+        // 5. Set up change listeners on the selection field
+        if (dropdown) {
+            dropdown.addEventListener('change', updatePageProvinceText);
+        }
+        
+        // 6. DELAY FIX: Sync wording safely after block markup layout structures settle
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(updatePageProvinceText, 1);
+        } else {
+            window.addEventListener('load', updatePageProvinceText);
+        }
+    });
+
+    function changeFontSize(size) {
+        document.body.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+        document.body.classList.add(`font-size-${size}`);
+        localStorage.setItem('preferred-font-size', size);
+    }
+
+    function toggleTheme() {
+        const path = window.location.pathname;
+        if (path === '/' || path.endsWith('index.html') || path === '') return;
+        
+        const isDark = document.documentElement.classList.toggle('dark-theme');
+        localStorage.setItem('preferred-theme', isDark ? 'dark' : 'light');
+        updateThemeButtonText(isDark);
+    }
+
+    // Function to update the page prose text based on what is selected
+    function updatePageProvinceText() {
+        const dropdown = document.getElementById('province-select');
+        const dynamicTextSpan = document.getElementById('dynamic-province-text');
+        
+        if (dropdown) {
+            // Save the selection code (e.g. "BC", "ON") to localStorage
+            localStorage.setItem('preferred-province', dropdown.value);
             
-            if (dropdown) {
-                // Save the selection code (e.g. "BC", "ON") to localStorage
-                localStorage.setItem('preferred-province', dropdown.value);
-                
-                // If the current page contains our text hook, swap the wording
-                if (dynamicTextSpan) {
-                    const selectedProvinceName = dropdown.options[dropdown.selectedIndex].text;
-                    dynamicTextSpan.innerText = selectedProvinceName;
-                }
+            // If the current page contains our text hook, swap the wording
+            if (dynamicTextSpan) {
+                const selectedProvinceName = dropdown.options[dropdown.selectedIndex].text;
+                dynamicTextSpan.innerText = selectedProvinceName;
             }
         }
-    </script>
+    }
+</script>
 </body>
 </html>
