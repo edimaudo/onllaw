@@ -90,7 +90,7 @@
                 </div>
                 
                 <button id="theme-toggle" onclick="toggleTheme()" class="px-3 py-1 text-xs font-bold bg-[#002147] text-white rounded hover:bg-opacity-90" aria-label="Toggle dark and light mode">
-                    Theme
+                    Theme: Light
                 </button>
             </div>
 
@@ -157,6 +157,14 @@
             localStorage.setItem('preferred-font-size', size);
         }
 
+        // Function to update the button text so the end-user actually knows the active state
+        function updateThemeButtonText(isDark) {
+            const themeBtn = document.getElementById('theme-toggle');
+            if (themeBtn) {
+                themeBtn.innerText = isDark ? "Theme: Dark" : "Theme: Light";
+            }
+        }
+        
         function toggleTheme() {
             // Prevent theme changing on index.html per requirements
             const path = window.location.pathname;
@@ -165,6 +173,9 @@
             }
             const isDark = document.documentElement.classList.toggle('dark-theme');
             localStorage.setItem('preferred-theme', isDark ? 'dark' : 'light');
+
+            // Update the text instantly for the user
+            updateThemeButtonText(isDark);
         }
     </script>
 </body>
