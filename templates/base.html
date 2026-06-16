@@ -159,7 +159,11 @@
                 }
             
                
-                updatePageProvinceText();
+               if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                    setTimeout(updatePageProvinceText, 1);
+                } else {
+                    window.addEventListener('load', updatePageProvinceText);
+                }
         });
 
         function changeFontSize(size) {
