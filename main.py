@@ -10,7 +10,6 @@ import os
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
-#app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 async def landing(request: Request):
@@ -29,7 +28,7 @@ async def get_qa_page(request: Request):
 async def handle_audit(file: UploadFile = File(None), clause_text: str = Form(None)):
     context = ""
     
-    # 1. Extraction with Scanned PDF Detection
+    # Extraction with Scanned PDF Detection
     if file and file.filename:
         file_bytes = await file.read()
         context = extract_text_from_file(file_bytes, file.filename)
@@ -50,9 +49,9 @@ async def handle_audit(file: UploadFile = File(None), clause_text: str = Form(No
     if not context or "Unsupported" in context:
         return {"answer": "Error: No readable text was provided for analysis."}
 
-   # Specialized Review prompt
+   # Specialized Review prompt --> this needed to be moved
     audit_prompt = (
-        "Act as an Ontario Employment Law Expert. Audit the following text for ESA compliance.\n"
+        "Act as an Employment Law Expert in Canada. Audit the following text for ESA compliance.\n"
         "1. Identify any illegal or unenforceable clauses.\n"
         "2. Suggest specific corrections.\n"
         "3.  If there is an illegal or unenforceable clause(s) PROVDE A DRAFT collaborative EMAIL to HR\n[Provide a collaborative email draft here]\n\n"
@@ -60,7 +59,7 @@ async def handle_audit(file: UploadFile = File(None), clause_text: str = Form(No
         f"CONTRACT CONTENT:\n{context}"
     )
     
-    # 3. Call the Agent
+    # Call the Agent
     analysis = await ask_esa_lawyer(audit_prompt)
     return {"answer": analysis}
 
